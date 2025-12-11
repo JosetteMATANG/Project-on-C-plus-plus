@@ -5,6 +5,11 @@
 #include <random>
 #include <cmath>
 #include <algorithm>
+
+
+#include "asianoption.h"
+#include "option.h"
+
 using namespace std;
 
 
@@ -18,27 +23,35 @@ private:
     double Sigma; //Volatility
 
 public:
+
+    //constructors
     BlackScholes();
     BlackScholes(double S0, double R, double Sigma);
 
 
-
+    //getters
     double get_S0();
     double get_R();
     double get_Sigma();
 
+    //setters
     void set_S0(double S0);
     void set_R(double R);
     void set_Sigma(double Sigma);
 
 
-
+    //pricing of a european option
     double callPrice(double K, double T);
     double putPrice(double K, double T);
 
 
+
+    //greeks for european options
+    //In the case of a european option there is a closed formula for each of them so we compute them directly
+
     double callDelta(double K, double T);
     double putDelta(double K, double T);
+
 
 
     double callGamma(double K, double T) const;
@@ -54,10 +67,26 @@ public:
     double putRho(double K, double T) const;
 
 
+    //simulation of spot prices, useful for example
+    double simulateTerminalPrice(double T) const;  //simulate the spot price at the end of maturity
+    vector<double> simulatePath(double T, int steps) const; //simulate the spot price path from now to the maturity
 
-    double simulateTerminalPrice(double T) const;
-    vector<double> simulatePath(double T, int steps) const;
 
+    double priceMonteCarloAsian(AsianOption* opt, int paths, int steps);// Monte-Carlo pricing, used for asian options
+
+
+    //the function below compute the proportion of underlying we must have to delta hedge
+    // it returns a double value between -1 and 1
+    //we do it here under black scholes model with an european option
+    //for instance if it returns 0.8 for each call we must buy 0.8 underlying
+    //if it's -0.2 we must short 0.2 underlying for each put
+    double replication(Option opt);
+
+    //the same as above but for an asian option
+    //we use finite differences
+    double asianReplication(AsianOption* opt, double epsilon, int paths, int steps);
+
+    //destructor
     ~BlackScholes();
 };
 
