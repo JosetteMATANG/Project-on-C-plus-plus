@@ -69,6 +69,8 @@ public:
 
     //simulation of spot prices, useful for example
     double simulateTerminalPrice(double T) const;  //simulate the spot price at the end of maturity
+    // for the the both following functions we have a random number generator
+    //it's crucial that this argument is passed for the stability of the monte carlo simulations
     vector<double> simulatePath(double T, int steps, mt19937 &gen); //simulate the spot price path from now to the maturity
 
 
