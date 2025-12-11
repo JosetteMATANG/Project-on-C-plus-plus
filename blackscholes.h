@@ -69,8 +69,10 @@ public:
 
     //simulation of spot prices, useful for example
     double simulateTerminalPrice(double T) const;  //simulate the spot price at the end of maturity
+
     // for the the both following functions we have a random number generator
     //it's crucial that this argument is passed for the stability of the monte carlo simulations
+
     vector<double> simulatePath(double T, int steps, mt19937 &gen); //simulate the spot price path from now to the maturity
 
 
@@ -79,8 +81,10 @@ public:
 
     //the function below compute the proportion of underlying we must have to delta hedge
     // it returns a double value between -1 and 1
+
     //we do it here under black scholes model with an european option
     //for instance if it returns 0.8 for each call we must buy 0.8 underlying
+
     //if it's -0.2 we must short 0.2 underlying for each put
     double replication(Option opt);
 
