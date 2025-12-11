@@ -184,15 +184,13 @@ double BlackScholes::simulateTerminalPrice(double T) const
 
 
 
-vector<double> BlackScholes::simulatePath(double T, int steps) const
+vector<double> BlackScholes::simulatePath(double T, int steps, mt19937 &gen)
 {
     vector<double> path(steps + 1);
     path[0] = S0;
     double dt = T / steps;
 
     //same as before, we generate a gaussian
-    random_device rd;
-    mt19937 gen(rd());
     normal_distribution<> dist(0.0, 1.0);
 
     //as opposed to the previous function we want an entire path for the spot price
@@ -208,7 +206,7 @@ vector<double> BlackScholes::simulatePath(double T, int steps) const
 
 
 
-double BlackScholes::priceMonteCarloAsian(AsianOption* opt, int paths, int steps)
+double BlackScholes::priceMonteCarloAsian(AsianOption* opt, int paths, int steps, mt19937 &gen)
 {
     double sum_payoffs = 0.0;
     double T = opt->get_T();
@@ -218,9 +216,8 @@ double BlackScholes::priceMonteCarloAsian(AsianOption* opt, int paths, int steps
     //at the end of each step we get a possible payoff that we add to sum_payoffs
     for (int i = 0; i < paths; ++i)
     {
-
-        vector<double> path = simulatePath(T, steps);
-
+        // Pass the generator to simulatePath to ensure the same random numbers are used
+        vector<double> path = simulatePath(T, steps, gen);
 
         double payoff_value = opt->payoff(path);
 
@@ -270,12 +267,19 @@ double BlackScholes::asianReplication(AsianOption* opt, double epsilon, int path
     //we save the real S0
     double S0_initial = S0;
 
+    //we create a unique generator for Monte Carlo to use the same random numbers
+    //else there will be instability
+    mt19937 gen(12345);
+
     //we price the option
-    double V_A_base = priceMonteCarloAsian(opt, paths, steps);
+    double V_A_base = priceMonteCarloAsian(opt, paths, steps, gen);
 
     //we add epsilon to S0 and we reprice the option
     S0 = S0_initial + epsilon;
-    double V_A_up = priceMonteCarloAsian(opt, paths, steps);
+
+    //we reset the generator to the same seed to reuse the same paths
+    gen.seed(12345);
+    double V_A_up = priceMonteCarloAsian(opt, paths, steps, gen);
 
     //we reassign to S0 its initial value
     S0 = S0_initial;
@@ -286,6 +290,7 @@ double BlackScholes::asianReplication(AsianOption* opt, double epsilon, int path
 
     //we can notice that we dont need to have two cases (put and call) as in the european option
 }
+
 
 
 

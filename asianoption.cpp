@@ -3,7 +3,13 @@
 
 
 AsianOption::AsianOption() {}
-AsianOption::AsianOption(double K, double T, bool isCall) {}
+
+AsianOption::AsianOption(double K, double T, bool isCall)
+{
+    this->K = K;
+    this->T = T;
+    this->isCall = isCall;
+}
 
 
 

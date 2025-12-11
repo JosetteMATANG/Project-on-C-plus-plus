@@ -69,10 +69,10 @@ public:
 
     //simulation of spot prices, useful for example
     double simulateTerminalPrice(double T) const;  //simulate the spot price at the end of maturity
-    vector<double> simulatePath(double T, int steps) const; //simulate the spot price path from now to the maturity
+    vector<double> simulatePath(double T, int steps, mt19937 &gen); //simulate the spot price path from now to the maturity
 
 
-    double priceMonteCarloAsian(AsianOption* opt, int paths, int steps);// Monte-Carlo pricing, used for asian options
+    double priceMonteCarloAsian(AsianOption* opt, int paths, int steps, mt19937 &gen);// Monte-Carlo pricing, used for asian options
 
 
     //the function below compute the proportion of underlying we must have to delta hedge
