@@ -47,6 +47,7 @@ void AsianOption::set_isCall(bool isCall)
 
 double AsianOption::payoff(const std::vector<double>& ST_path)
 {
+    //we compute the average spot price
     double sum_prices = 0.0;
 
     if (ST_path.empty())
@@ -60,10 +61,16 @@ double AsianOption::payoff(const std::vector<double>& ST_path)
 
     double avg_price = sum_prices / ST_path.size();
 
+
+    //we deduce from it the payoff of the asian option
+
+    //if it's a call
     if (this->get_isCall())
     {
         return std::max(avg_price - get_K(), 0.0);
     }
+
+    //if it's a put
     else
     {
         return std::max(get_K() - avg_price, 0.0);
