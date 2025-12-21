@@ -4,11 +4,12 @@
 #include <vector>
 #include <random>
 #include <cmath>
-#include <algorithm>
+
 
 
 #include "asianoption.h"
 #include "option.h"
+#include "europeanoption.h"
 
 using namespace std;
 
@@ -86,7 +87,7 @@ public:
     //for instance if it returns 0.8 for each call we must buy 0.8 underlying
 
     //if it's -0.2 we must short 0.2 underlying for each put
-    double replication(Option opt);
+    double europeanReplication(EuropeanOption opt);
 
     //the same as above but for an asian option
     //we use finite differences

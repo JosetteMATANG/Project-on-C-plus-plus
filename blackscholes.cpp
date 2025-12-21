@@ -235,7 +235,7 @@ double BlackScholes::priceMonteCarloAsian(AsianOption* opt, int paths, int steps
 
 
 
-double BlackScholes::replication(Option opt)
+double BlackScholes::europeanReplication(EuropeanOption opt)
 {
     double K = opt.get_K();
     double T = opt.get_T();

@@ -1,12 +1,12 @@
 #include "option.h"
 
-
 Option::Option()
 {
-    K = 0.0;
-    T = 0.0;
-    isCall = true;
+    this->K = 0.0;
+    this->T = 0.0;
+    this->isCall = true;
 }
+
 
 Option::Option(double K, double T, bool isCall)
 {
@@ -16,60 +16,41 @@ Option::Option(double K, double T, bool isCall)
 }
 
 
+Option::~Option() {}
 
 
-
-
-double Option::get_K()
+double Option::get_K() const
 {
-    return this->K;
+    return K;
 }
 
-double Option::get_T()
+
+double Option::get_T() const
 {
-    return this->T;
+    return T;
 }
 
-bool Option::get_isCall()
-{
-    return this->isCall;
-}
 
+bool Option::get_isCall() const
+{
+    return isCall;
+}
 
 
 
 void Option::set_K(double K)
 {
-    this->K = K;;
+    this->K = K;
 }
+
 
 void Option::set_T(double T)
 {
     this->T = T;
 }
 
+
 void Option::set_isCall(bool isCall)
 {
     this->isCall = isCall;
 }
-
-
-
-
-
-
-double Option::payoff(double ST)
-{
-        if(this->isCall)
-        {
-            return max(ST - K, 0.0);
-        }
-
-        else
-        {
-            return max(K - ST, 0.0);
-        }
-}
-
-
-Option::~Option(){}

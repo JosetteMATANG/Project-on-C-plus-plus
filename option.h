@@ -1,42 +1,30 @@
-#ifndef OPTION_H_INCLUDED
-#define OPTION_H_INCLUDED
+#ifndef OPTION_H
+#define OPTION_H
+
+
 #include <algorithm>
-#include <cmath>
-using namespace std;
 
-
-//European option
-
-class Option
-{
-
-private:
-    double K; //Strike price
-    double T;  // Time to maturity
-    bool isCall; //true if it is a call false if it's a put
+class Option {
+protected:
+    double K;
+    double T;
+    bool isCall;
 
 public:
-    //constructors
     Option();
     Option(double K, double T, bool isCall);
+    virtual ~Option();
 
-    //getters
-    double get_K();
-    double get_T();
-    bool get_isCall();
+    double get_K() const;
+    double get_T() const;
+    bool get_isCall() const;
 
-    //setters
     void set_K(double K);
     void set_T(double T);
     void set_isCall(bool isCall);
 
-    //compute the payoff for a given spot price (at the maturity)
-    double payoff(double ST);
-
-    ~Option();
-
-
+    virtual double payoff(double ST) const = 0;
 };
 
+#endif
 
-#endif // OPTION_H_INCLUDED
