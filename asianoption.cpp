@@ -1,4 +1,4 @@
-#include "AsianOption.h"
+#include "asianoption.h"
 #include <algorithm>
 #include <numeric>
 

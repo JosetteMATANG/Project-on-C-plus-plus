@@ -1,4 +1,4 @@
-#include "EuropeanOption.h"
+#include "europeanoption.h"
 
 
 EuropeanOption::EuropeanOption() : Option() {}
