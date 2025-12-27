@@ -1,10 +1,12 @@
 #ifndef BLACKSCHOLES_H_INCLUDED
 #define BLACKSCHOLES_H_INCLUDED
+#define _USE_MATH_DEFINES
+
 
 #include <vector>
 #include <random>
 #include <cmath>
-
+#include <algorithm>
 
 
 #include "asianoption.h"
